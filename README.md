@@ -81,6 +81,9 @@ Before running the project, make sure you have the following installed:
 
 - `/teachers`: View all teachers.
 - `/teacher/:id`: View teacher details.
+- `/personalInfo/:id`: View personal info of teacher.
+- `/assignedClasses/:id`: View assigned classes to the teacher.
+- `/studentsofAssignedClasses/:id`: View assigned students of each class to the teacher.
 
 ### Head Dashboard
 
