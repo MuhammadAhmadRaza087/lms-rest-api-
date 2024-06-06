@@ -119,7 +119,7 @@ router.delete('/delclass/:id', (req, res, next) => {
 })
 
 
-router.delete('/delstudent', (req, res, next) => {
+router.delete('/delstudent/:id', (req, res, next) => {
     Student.deleteOne({ _id: req.params.id }).then((result) => {
         res.json(result);
     }).catch((err) => {
@@ -128,12 +128,35 @@ router.delete('/delstudent', (req, res, next) => {
 })
 
 
-router.delete('/delteacher', (req, res, next) => {
+router.delete('/delteacher/:id', (req, res, next) => {
     Teacher.deleteOne({ _id: req.params.id }).then((result) => {
         res.json(result);
     }).catch((err) => {
         res.json(err);
     })
 })
+
+
+router.put('/updatestudent/:id', (req, res, next) => {
+    const { id } = req.params;
+    const { name, rollno } = req.body;
+
+    // Find the student by ID and update their name and roll number
+    Student.findByIdAndUpdate(
+        id,
+        { name, rollno },
+        { new: true, runValidators: true } // Options to return the updated document and run validation
+    )
+        .then((student) => {
+            if (!student) {
+                return res.status(404).send({ message: 'Student not found' });
+            }
+            res.status(200).send(student);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send({ error: 'An error occurred while updating the student' });
+        });
+});
 
 module.exports = router;
